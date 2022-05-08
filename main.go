@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/adshao/go-binance/v2"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
 )
 
@@ -23,7 +24,7 @@ func startUserStream() {
 	fmt.Println(res)
 }
 
-func userWallet() {
+func userWallet(*gin.Context) {
 	res, err := client.NewGetAccountService().Do(context.Background())
 	if err != nil {
 		fmt.Println(err)
@@ -48,5 +49,13 @@ func userWallet() {
 //}
 func main() {
 
-	userWallet()
+	r := gin.Default()
+	r.GET("/ping", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "pong",
+		})
+	})
+	r.GET("/wallet", userWallet)
+	r.Run(":8080")
+
 }
