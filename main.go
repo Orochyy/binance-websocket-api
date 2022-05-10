@@ -5,15 +5,12 @@ import (
 	"github.com/adshao/go-binance/v2"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
+	"os"
 )
 
-type wallet struct {
-	BTC float64 `json:"btc"`
-}
-
 var (
-	apiKey    = "wdA1ZXkD2VgF7p3v1vgI8CkgsXXoT1IqFCTeo8XAWDbAnitoFry4Z53iCqCJsBhU"
-	secretKey = "6RysiPFMfRTYOA3mN5JcfUwQLKfM7YD4QglmIsoH1W5OwQWQgEtRd54JssQQ1fAA"
+	apiKey    = os.Getenv("API_KEY")
+	secretKey = os.Getenv("API_SECRET")
 )
 var client = binance.NewClient(apiKey, secretKey)
 
@@ -26,7 +23,7 @@ var client = binance.NewClient(apiKey, secretKey)
 //	fmt.Println(res)
 //}
 
-func userWalletBTC(*gin.Context) {
+func userWallet(*gin.Context) {
 	var result []binance.Balance
 	res, err := client.NewGetAccountService().Do(context.Background())
 	if err != nil {
@@ -34,6 +31,7 @@ func userWalletBTC(*gin.Context) {
 	}
 	result = res.Balances
 	fmt.Println(result[0])
+
 }
 
 //func userData() {
@@ -57,7 +55,7 @@ func main() {
 			"message": "pong",
 		})
 	})
-	r.GET("/wallet", userWalletBTC)
+	r.GET("/wallet", userWallet)
 	r.Run(":8080")
 
 }
