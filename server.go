@@ -80,11 +80,10 @@ func userWallet(*gin.Context) {
 }
 
 func main() {
-	AVGBuy := countAVGBTC(BTCPrice, btcUSD)
-	PercentDiff := countDiff(sellPrice, AVGBuy)
-	time.Sleep(time.Millisecond * 300)
-	CountPl := countPlus(PercentDiff, allMoney(btcUSD))
-	sum(btcUSD, CountPl)
+	//AVGBuy := countAVGBTC(BTCPrice, btcUSD)
+	//PercentDiff := countDiff(sellPrice, AVGBuy)
+	//time.Sleep(time.Millisecond * 300)
+	//CountPl := countPlus(PercentDiff, allMoney(btcUSD))
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
@@ -143,7 +142,12 @@ func allMoney(btcUSD map[int]float64) float64 {
 	}
 	return allMoney
 }
-func sum(btcUSD map[int]float64, CountPl float64) {
+func sum(*gin.Context) {
+	AVGBuy := countAVGBTC(BTCPrice, btcUSD)
+	PercentDiff := countDiff(sellPrice, AVGBuy)
+	time.Sleep(time.Millisecond * 300)
+	CountPl := countPlus(PercentDiff, allMoney(btcUSD))
+
 	result := allMoney(btcUSD) + CountPl
 	time.Sleep(time.Millisecond * 300)
 	resultSf := fmt.Sprintf("%.2f USD", result)
