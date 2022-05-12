@@ -10,17 +10,18 @@ import (
 )
 
 const sellPrice = 40000
+const separate = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 
 var BTCPrice = map[int]float64{
-	1: 31000,
-	2: 30450,
+	1: 30623,
+	//2: 30450,
 	//3: 36083,
 	//4: 31973,
 	//5: 31000,
 }
 var btcUSD = map[int]float64{
-	1: 10670,
-	2: 993,
+	1: 11950,
+	//2: 993,
 	//3: 1490,
 	//4: 3236,
 	//5: 850,
@@ -55,6 +56,7 @@ var client = binance.NewClient(apiKey, secretKey)
 //	}
 //	<-doneC
 //}
+
 //func userData() {
 //	wsHandler := func(message []byte) {
 //		fmt.Println(string(message))
@@ -80,10 +82,9 @@ func userWallet(*gin.Context) {
 }
 
 func main() {
-	//AVGBuy := countAVGBTC(BTCPrice, btcUSD)
-	//PercentDiff := countDiff(sellPrice, AVGBuy)
-	//time.Sleep(time.Millisecond * 300)
-	//CountPl := countPlus(PercentDiff, allMoney(btcUSD))
+	//flag.Parse()
+	//hub := newHub()
+	//go hub.run()
 
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
@@ -100,7 +101,7 @@ func countAVGBTC(BTCPrice map[int]float64, btcUSD map[int]float64) float64 {
 	var allPercents float64
 	var AVG float64
 
-	USDresult := fmt.Sprintf("all deposit:%v USDT", allMoney(btcUSD))
+	USDresult := fmt.Sprintf("%s all deposit:%v USDT", separate, allMoney(btcUSD))
 	fmt.Println(USDresult)
 	time.Sleep(time.Millisecond * 500)
 	for _, value := range btcUSD {
@@ -115,7 +116,7 @@ func countAVGBTC(BTCPrice map[int]float64, btcUSD map[int]float64) float64 {
 		AVG += BTCPrice[key] * btcUSD[key]
 	}
 	AVG /= allMoney(btcUSD)
-	resultSf := fmt.Sprintf("AVG USDT BUY PRICE:%v USD", int(AVG))
+	resultSf := fmt.Sprintf("%sAVG USDT BUY PRICE:%v USD", separate, int(AVG))
 	fmt.Println(resultSf)
 	time.Sleep(time.Millisecond * 500)
 	return AVG
@@ -124,14 +125,14 @@ func countAVGBTC(BTCPrice map[int]float64, btcUSD map[int]float64) float64 {
 func countDiff(sellPrice float64, buyPrice float64) float64 {
 	percents := (sellPrice * 100) / buyPrice
 	result := percents - 100
-	resultSf := fmt.Sprintf("%.2f %%", percents-100)
+	resultSf := fmt.Sprintf("%s%.2f %%", separate, percents-100)
 	fmt.Println(resultSf)
 	return result
 }
 
 func countPlus(percent float64, deposit float64) float64 {
 	result := (deposit * percent) / 100
-	resultSf := fmt.Sprintf("+%.2f USD", result)
+	resultSf := fmt.Sprintf("%s +%.2f USD", separate, result)
 	fmt.Println(resultSf)
 	return result
 }
@@ -150,6 +151,6 @@ func sum(*gin.Context) {
 
 	result := allMoney(btcUSD) + CountPl
 	time.Sleep(time.Millisecond * 300)
-	resultSf := fmt.Sprintf("%.2f USD", result)
+	resultSf := fmt.Sprintf("%s%.2f USD", separate, result)
 	fmt.Println(resultSf)
 }
