@@ -10,17 +10,6 @@ import (
 	"time"
 )
 
-type Trade struct {
-	Exchange  string  `json:"exchange"`
-	Base      string  `json:"base"`
-	Quote     string  `json:"quote"`
-	Direction string  `json:"direction"`
-	Price     float64 `json:"price"`
-	Volume    int64   `json:"volume"`
-	Timestamp int64   `json:"timestamp"`
-	PriceUsd  float64 `json:"priceUsd"`
-}
-
 const sellPrice = 40000
 const separate = "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 

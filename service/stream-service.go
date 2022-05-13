@@ -19,6 +19,7 @@ type Trade struct {
 }
 
 func StreamCoinCap(*gin.Context) {
+	var jsonT []byte
 	// websocket client connection
 	c, _, err := websocket.DefaultDialer.Dial("wss://ws.coincap.io/trades/binance", nil)
 	if err != nil {
@@ -56,8 +57,8 @@ func StreamCoinCap(*gin.Context) {
 
 	// print the trades
 	for trade := range dogecoin {
-		json, _ := json.Marshal(trade)
-		fmt.Println(string(json))
+		jsonT, _ = json.Marshal(trade)
+		fmt.Println(string(jsonT))
 	}
 	defer c.Close()
 }

@@ -11,11 +11,8 @@ type Bird struct {
 }
 
 func marshal() string {
-	//var bird Bird
 	birdJson := `{"species": "pigeon","description": "likes to perch on rocks"}`
-	tmp, _ := json.Marshal(birdJson)
-	Sf := fmt.Sprintf(string(tmp))
-	return Sf
+	return birdJson
 }
 
 func main() {
