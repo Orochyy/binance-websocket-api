@@ -6,6 +6,7 @@ import (
 	"github.com/adshao/go-binance/v2"
 	"github.com/gin-gonic/gin"
 	"golang.org/x/net/context"
+	"net/http"
 	"os"
 	"time"
 )
@@ -83,20 +84,26 @@ func userWallet(*gin.Context) {
 }
 
 func main() {
-	//flag.Parse()
-	//hub := newHub()
-	//go hub.run()
-
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*")
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",
 		})
 	})
+	r.GET("/login", func(c *gin.Context) {
+		c.HTML(
+			http.StatusOK,
+			"index.html",
+			gin.H{
+				"title": "Login",
+			},
+		)
+	})
 	r.GET("/count", sum)
 	r.GET("/wallet", userWallet)
 	r.GET("/stream", service.StreamCoinCap)
-	r.Run(":8080")
+	r.Run("wss://192.168.1.21:8080")
 }
 
 func countAVGBTC(BTCPrice map[int]float64, btcUSD map[int]float64) float64 {
