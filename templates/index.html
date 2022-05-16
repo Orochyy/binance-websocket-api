@@ -16,7 +16,7 @@
 
     socket.onmessage = function (event) {
         console.log(`[message] Data received from server: ${event.data}`);
-        document.getElementById('tmp').textContent = `[message] Data received from server: ${event.data}`;
+        document.getElementById('tmp').append(`[message] Data received from server: ${event.data}`);
     };
 
     socket.onclose = function (event) {
