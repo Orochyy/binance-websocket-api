@@ -7,7 +7,7 @@
 
 <script>
 
-    let socket = new WebSocket("wss://ws.coincap.io/trades/binance");
+    let socket = new WebSocket("ws://192.168.1.21:8080/stream");
 
     socket.onopen = function (e) {
         console.log("[open] Connection established");

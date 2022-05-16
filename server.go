@@ -5,9 +5,7 @@ import (
 	"fmt"
 	"github.com/adshao/go-binance/v2"
 	"github.com/gin-gonic/gin"
-	"github.com/gorilla/websocket"
 	"golang.org/x/net/context"
-	"log"
 	"net/http"
 	"os"
 	"time"
@@ -36,10 +34,6 @@ var (
 	secretKey = os.Getenv("API_SECRET")
 )
 var client = binance.NewClient(apiKey, secretKey)
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-}
 
 //func startUserStream() {
 //	res, err := client.NewStartUserStreamService().Do(context.Background())
@@ -107,10 +101,8 @@ func main() {
 		)
 	})
 	r.GET("/count", sum)
-	r.GET("/", newPage)
 	r.GET("/wallet", userWallet)
 	r.GET("/stream", service.StreamCoinCap)
-	http.HandleFunc("/ws", wsEndpoint)
 	r.Run("192.168.1.21:8080")
 }
 
@@ -171,52 +163,3 @@ func sum(*gin.Context) {
 	resultSf := fmt.Sprintf("%s%.2f USD", separate, result)
 	fmt.Println(resultSf)
 }
-
-func reader(conn *websocket.Conn) {
-	for {
-		// read in a message
-		messageType, p, err := conn.ReadMessage()
-		if err != nil {
-			log.Println(err)
-			return
-		}
-		// print out that message for clarity
-		fmt.Println(messageType)
-
-		if err := conn.WriteMessage(messageType, p); err != nil {
-			log.Println(err)
-			return
-		}
-
-	}
-}
-
-func wsEndpoint(w http.ResponseWriter, r *http.Request) {
-	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
-
-	// upgrade this connection to a WebSocket
-	// connection
-	ws, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println(err)
-	}
-	// helpful log statement to show connections
-	log.Println("Client Connected")
-
-	reader(ws)
-}
-
-func writer(conn *websocket.Conn, message string) {
-
-	messageConverted := []byte(message)
-	messageType := 1
-
-	if err := conn.WriteMessage(messageType, messageConverted); err != nil {
-		log.Println(err)
-		return
-	}
-}
-
-//func newPage(*gin.Context) {
-//	writer(wsEndpoint, "My message")
-//}

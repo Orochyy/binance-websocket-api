@@ -2,10 +2,17 @@ package service
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
+	"log"
+	"net/http"
 )
+
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
+}
 
 type Trade struct {
 	Exchange  string  `json:"exchange"`
@@ -18,7 +25,13 @@ type Trade struct {
 	PriceUsd  float64 `json:"priceUsd"`
 }
 
-func StreamCoinCap(*gin.Context) {
+func StreamCoinCap(context *gin.Context) {
+	ws, err := upgrader.Upgrade(context.Writer, context.Request, nil)
+	if err != nil {
+		log.Println("error get connection")
+		log.Fatal(err)
+	}
+	defer ws.Close()
 	var jsonT []byte
 	// websocket client connection
 	c, _, err := websocket.DefaultDialer.Dial("wss://ws.coincap.io/trades/binance", nil)
@@ -58,7 +71,12 @@ func StreamCoinCap(*gin.Context) {
 	// print the trades
 	for trade := range dogecoin {
 		jsonT, _ = json.Marshal(trade)
-		fmt.Println(string(jsonT))
+
+		err = ws.WriteMessage(1, jsonT)
+		if err != nil {
+			log.Println("write:", err)
+			break
+		}
 	}
 	defer c.Close()
 }
