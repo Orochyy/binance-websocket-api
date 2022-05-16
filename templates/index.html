@@ -7,7 +7,7 @@
 
 <script>
 
-    let socket = new WebSocket("ws://192.168.1.21:8080/stream");
+    let socket = new WebSocket("ws://"+ document.location.host+ "/stream");
 
     socket.onopen = function (e) {
         console.log("[open] Connection established");
