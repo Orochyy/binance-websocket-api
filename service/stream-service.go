@@ -61,16 +61,17 @@ func StreamCoinCap(context *gin.Context) {
 	dogecoin := make(chan Trade)
 	go func() {
 		for trade := range input {
-			if trade.Base == "dogecoin" && trade.Quote == "tether" {
+			if trade.Base == "bitcoin" && trade.Quote == "tether" {
 				dogecoin <- trade
 			}
 		}
 		close(dogecoin)
 	}()
-
+	//jsonArr := make(chan string)
 	// print the trades
 	for trade := range dogecoin {
 		jsonT, _ = json.Marshal(trade)
+		//jsonArr <- string(jsonT)
 
 		err = ws.WriteMessage(1, jsonT)
 		if err != nil {
