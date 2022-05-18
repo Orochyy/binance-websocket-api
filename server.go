@@ -151,6 +151,7 @@ func allMoney(btcUSD map[int]float64) float64 {
 		allMoney += x
 	}
 	return allMoney
+	//
 }
 func sum(*gin.Context) {
 	AVGBuy := countAVGBTC(BTCPrice, btcUSD)
