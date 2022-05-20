@@ -163,7 +163,3 @@ func sum(*gin.Context) {
 	resultSf := fmt.Sprintf("%s%.2f USD", separate, result)
 	fmt.Println(resultSf)
 }
-
-func del() {
-
-}
