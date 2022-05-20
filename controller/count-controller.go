@@ -1,9 +1,9 @@
 package controller
 
 import (
+	"binance-websocket-api/service"
 	"github.com/gin-gonic/gin"
 	"net/http"
-	"parseRandomJSON-test/service"
 )
 
 type CountController interface {
@@ -11,5 +11,5 @@ type CountController interface {
 }
 
 func GetCount(c *gin.Context) {
-	c.IndentedJSON(http.StatusOK, service.ParseJokeNameStruct())
+	c.IndentedJSON(http.StatusOK, service.Sum)
 }
