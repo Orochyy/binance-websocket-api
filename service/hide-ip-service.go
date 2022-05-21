@@ -1,13 +1,6 @@
-package main
+package service
 
-import (
-	"fmt"
-	"net"
-)
-
-func main() {
-	fmt.Println(LocalIP())
-}
+import "net"
 
 func LocalIP() net.IP {
 	ifaces, err := net.Interfaces()
@@ -30,7 +23,7 @@ func LocalIP() net.IP {
 			}
 
 			if isPrivateIP(ip) {
-				return ip
+				return net.IP(ip.String())
 			}
 		}
 	}
