@@ -65,8 +65,7 @@ func userWallet(*gin.Context) {
 }
 
 func main() {
-	strIp := string(service.LocalIP())
-	fmt.Println(strIp)
+	ip := string(service.LocalIP())
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
 	r.GET("/ping", func(c *gin.Context) {
@@ -86,5 +85,5 @@ func main() {
 	r.GET("/count", service.Sum)
 	r.GET("/wallet", userWallet)
 	r.GET("/stream", service.StreamCoinCap)
-	r.Run(strIp + ":8080")
+	r.Run(ip + ":8080")
 }
