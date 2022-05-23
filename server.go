@@ -87,3 +87,5 @@ func main() {
 	r.GET("/stream", service.StreamCoinCap)
 	r.Run(ip + ":8080")
 }
+
+//
