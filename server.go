@@ -85,5 +85,6 @@ func main() {
 	r.GET("/count", service.Sum)
 	r.GET("/wallet", userWallet)
 	r.GET("/stream", service.StreamCoinCap)
+	//обработать ошибку , щоб не дропалось коли захожу з браузера
 	r.Run(ip + ":8080")
 }
