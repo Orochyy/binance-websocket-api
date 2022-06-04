@@ -2,19 +2,9 @@ package main
 
 import (
 	"binance-websocket-api/service"
-	"fmt"
-	"github.com/adshao/go-binance/v2"
 	"github.com/gin-gonic/gin"
-	"golang.org/x/net/context"
 	"net/http"
-	"os"
 )
-
-var (
-	apiKey    = os.Getenv("API_KEY")
-	secretKey = os.Getenv("API_SECRET")
-)
-var client = binance.NewClient(apiKey, secretKey)
 
 //func startUserStream() {
 //	res, err := client.NewStartUserStreamService().Do(context.Background())
@@ -39,30 +29,16 @@ var client = binance.NewClient(apiKey, secretKey)
 //	}
 //	<-doneC
 //}
-
-//func userData() {
-//	wsHandler := func(message []byte) {
-//		fmt.Println(string(message))
-//	}
-//	errHandler := func(err error) {
-//		fmt.Println(err)
-//	}
-//	doneC, _, err := binance.WsUserDataServe(listenKey, wsHandler, errHandler)
+//func userWallet(*gin.Context) {
+//	var result []binance.Balance
+//	res, err := client.NewGetAccountService().Do(context.Background())
 //	if err != nil {
 //		fmt.Println(err)
-//		return
 //	}
-//	<-doneC
+//	result = res.Balances
+//	fmt.Println(result[0])
+//
 //}
-func userWallet(*gin.Context) {
-	var result []binance.Balance
-	res, err := client.NewGetAccountService().Do(context.Background())
-	if err != nil {
-		fmt.Println(err)
-	}
-	result = res.Balances
-	fmt.Println(result[0])
-}
 
 func main() {
 
@@ -84,7 +60,7 @@ func main() {
 		)
 	})
 	r.GET("/count", service.Sum)
-	r.GET("/wallet", userWallet)
+	r.GET("/wallet", service.UserWallet)
 	r.GET("/stream", service.StreamCoinCap) //handle the error so that it doesn't drop when I log in from the browser
 	r.Run(ip + ":8080")
 }
