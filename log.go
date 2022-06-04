@@ -7,25 +7,23 @@ import (
 
 func main() {
 
-	//log.Print("Hello")
-	//zlog.Print("Hello")
-	//
-	//zlog.Info().
-	//	Str("service", "my-service").
-	//	Int("Some integer", 10).
-	//	Msg("Hello")
-
-	debug()
 }
 
-func debug() {
+func testlog() {
 	debug := false
-	// Применяем уровень ведения журнала в начале приложения
 	zerolog.SetGlobalLevel(zerolog.InfoLevel)
 	if debug {
 		zerolog.SetGlobalLevel(zerolog.DebugLevel)
 	}
-	// Лог с именем сервиса
+}
+
+func debug() {
+	debug := false
+	zerolog.SetGlobalLevel(zerolog.InfoLevel)
+	if debug {
+		zerolog.SetGlobalLevel(zerolog.DebugLevel)
+	}
+
 	zlog.Info().
 		Str("service", "my-service").
 		Int("Some integer", 10).
