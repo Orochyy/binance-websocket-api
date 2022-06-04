@@ -65,6 +65,7 @@ func userWallet(*gin.Context) {
 }
 
 func main() {
+
 	ip := string(service.LocalIP())
 	r := gin.Default()
 	r.LoadHTMLGlob("templates/*")
