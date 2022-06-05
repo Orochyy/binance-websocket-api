@@ -29,16 +29,6 @@ import (
 //	}
 //	<-doneC
 //}
-//func userWallet(*gin.Context) {
-//	var result []binance.Balance
-//	res, err := client.NewGetAccountService().Do(context.Background())
-//	if err != nil {
-//		fmt.Println(err)
-//	}
-//	result = res.Balances
-//	fmt.Println(result[0])
-//
-//}
 
 func main() {
 
