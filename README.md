@@ -9,6 +9,8 @@ https://github.com/Orochyy/binance-websocket-api.git
 cd binance-websocket-api
 ```
 
+pack build --builder paketobuildpacks/builder:full binance-websocket-api
+
 ###Build
 ```
 pack build --builder gcr.io/buildpacks/builder:v1 binance-websocket-api
