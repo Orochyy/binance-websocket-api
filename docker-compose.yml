@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  binance:  #sercises  name (app)
+    container_name: binance   #container name
+    build:
+      context: . # ми вказуємо що використовуємо всі файли
+      # dockerfile: Dockerfile
+    image: binance-websocket-api # image name
+    command: /bin/sh -c "go run server.go" # run app
+    env_file: .env.development # we use .env file
+    ports:
+      - 8080:8080  # we use 8080:8080 ports
+    volumes:
+      - .:/app # ми в середину докера зберігаємо свої файли. І це все лежить по path
