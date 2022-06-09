@@ -30,3 +30,13 @@ go build
 pack build --builder=gcr.io/buildpacks/builder binance-websocket-api
 docker run -p8080:8080 binance-websocket-api
 ```
+
+###Build Dockerfile (<binance-websocket-api> as name)
+```
+docker build . -t binance-websocket-api
+```
+
+###Run container
+```
+docker run -p 1010:1010 binance-websocket-api
+```
