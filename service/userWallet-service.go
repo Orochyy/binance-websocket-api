@@ -26,4 +26,5 @@ func UserWallet(*gin.Context) {
 	}
 	result = res.Balances
 	fmt.Println(result[0])
+
 }
