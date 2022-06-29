@@ -3,32 +3,22 @@ package main
 import (
 	"binance-websocket-api/service"
 	"github.com/gin-gonic/gin"
+	swaggerfiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 )
 
-//func startUserStream() {
-//	res, err := client.NewStartUserStreamService().Do(context.Background())
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	fmt.Println(res)
-//}
+// @BasePath /api/v1
 
-//func userData() {
-//	wsHandler := func(message []byte) {
-//		fmt.Println(string(message))
-//	}
-//	errHandler := func(err error) {
-//		fmt.Println(err)
-//	}
-//	doneC, _, err := binance.WsUserDataServe(listenKey, wsHandler, errHandler)
-//	if err != nil {
-//		fmt.Println(err)
-//		return
-//	}
-//	<-doneC
-//}
+// PingExample godoc
+// @Summary ping example
+// @Schemes
+// @Description do ping
+// @Tags example
+// @Accept json
+// @Produce json
+// @Success 200 {float64} countSum
+// @Router /count [get]
 
 func main() {
 
@@ -52,5 +42,6 @@ func main() {
 	r.GET("/count", service.Sum)
 	r.GET("/wallet", service.UserWallet)
 	r.GET("/stream", service.StreamCoinCap) //handle the error so that it doesn't drop when I log in from the browser
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 	r.Run(ip + ":8080")
 }
